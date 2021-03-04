@@ -1,0 +1,152 @@
+  /*#basic layout css*/
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: white;
+            font-size: 60px;
+            margin-top: 60px;
+        }
+
+        .container {
+            height: 623px;
+            width: 1536px;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #header {
+            height: 97.5px;
+            background-color: skyblue;
+
+        }
+
+        /*memo_input css*/
+        #input_ctrl {
+            display: flex;
+            flex-direction: row;
+            margin-top: 30px;
+        }
+
+        #memo_text {
+            font-size: 30px;
+        }
+
+        #plus_btn {
+            width: 38px;
+            height: 38px;
+            font-size: 20px;
+            margin-left: 10px;
+            background-color: white;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            padding-bottom: 3px;
+        }
+
+        #plus_btn:hover{
+            background-color: tomato;
+        }
+
+        /*dropdown css*/
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            margin-right: 10px;
+        }
+
+        .dropbtn {
+            background-color: cadetblue;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            padding-left: 1453px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: skyblue;
+            min-width: 82px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 8px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: tomato;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: tomato;
+        }
+
+        #login_text {
+            text-align: center;
+        }
+
+        /*memo_oppend css   */
+        #memo_form{
+            display: flex;
+            flex-direction: column;
+            background-color: tomato;
+            width: 400px;
+            height: 60px;
+            padding-left:10px;
+            border-radius: 5px;
+        }
+
+        #write {
+            font-size: 20px;
+        }
+
+        #view_id{
+            padding-top:5px;
+            margin-bottom: 5px;
+        }
+                #empty_btn {
+            height: 60px;
+            width: 50px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #empty_btn:hover{
+            background-color: tomato;
+        }
+
+        .postform {
+            display: flex;
+            flex-direction: row;
+            margin-top: 30px;
+        }

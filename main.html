@@ -3,208 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
+    <link href="/home/sparta/static/css/main.css" rel="stylesheet">
 
-        {#basic layout css#}
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        h1 {
-            color: white;
-            font-size: 60px;
-            margin-top: 60px;
-        }
-
-        .container {
-            height: 623px;
-            width: 1536px;
-            background-color: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #header {
-            height: 97.5px;
-            background-color: skyblue;
-
-        }
-
-        {#memo_input css#}
-        #input_ctrl {
-            display: flex;
-            flex-direction: row;
-            margin-top: 30px;
-        }
-
-        #memo_text {
-            font-size: 30px;
-        }
-
-        #plus_btn {
-            width: 38px;
-            height: 38px;
-            font-size: 20px;
-            margin-left: 10px;
-            background-color: white;
-            border-radius: 3px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            padding-bottom: 3px;
-        }
-
-        #plus_btn:hover{
-            background-color: tomato;
-        }
-
-        /*dropdown css*/
-
-        img {
-            width: 40px;
-            height: 40px;
-            border-radius: 100%;
-            margin-right: 10px;
-        }
-
-        .dropbtn {
-            background-color: cadetblue;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            padding-left: 1453px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: skyblue;
-            min-width: 82px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 8px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: tomato;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown:hover .dropbtn {
-            background-color: tomato;
-        }
-
-        #login_text {
-            text-align: center;
-        }
-
-        {#memo_oppend css        #}
-        #memo_form{
-            display: flex;
-            flex-direction: column;
-            background-color: tomato;
-            width: 400px;
-            height: 60px;
-            padding-left:10px;
-            border-radius: 5px;
-        }
-
-        #write {
-            font-size: 20px;
-        }
-
-        #view_id{
-            padding-top:5px;
-            margin-bottom: 5px;
-        }
-                #empty_btn {
-            height: 60px;
-            width: 50px;
-            margin-left: 10px;
-            cursor: pointer;
-            border-radius: 3px;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #empty_btn:hover{
-            background-color: tomato;
-        }
-
-        .postform {
-            display: flex;
-            flex-direction: row;
-            margin-top: 30px;
-        }
-
-    </style>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <script>
-
-        function sendtext() {
-            {##memo_text에 적은 value를 가지고 온다#}
-            let memo = $('#memo_text').val()
-
-            $.ajax({
-                {#insert를 하기 위해서 api post요청으로 data를 보낸다.#}
-                type: "POST",
-                url: "/api/memo",
-                data: {
-                    {#보낼 data는 input에 적은 value이기 대문에 $('#memo_text').val()을 보낸다.#}
-                    memo_give: memo
-                },
-                success: function (response) {
-                    {#data가 성공적으로 보내졌으면 초기화면으로 돌아간다.#}
-                    window.location.reload()
-                }
-            })
-
-        }
-
-
-        // write_empty()를 누르면 해당 row 내용이 제거될 수 있게 server 요청
-        function write_empty(plan_memo) {
-
-            {#plan_memo는 {{ post['memo'] }} data를 의미한다. #}
-            $.ajax({
-                {#clear btn을 누르면 delete 기능을 할 것이기 때문에 server에 api post요청을 해서 data를 보낸다.#}
-                type: "POST",
-                url: "/api/delete",
-                data: {
-                    {#clear btn을 누른 post['memo'] 부분을 삭제할 것이기 때문에 data_give에 담아서 보낸다.#}
-                    memo_give: plan_memo
-                },
-                success: function (response) {
-                    {#data가 성공적으로 보내졌으면 초기화면으로 돌아간다.#}
-                    window.location.reload()
-                }
-            })
-        }
-
-    </script>
 </head>
 <body>
 
@@ -214,16 +14,16 @@
 <div id="header">
     <div class="dropdown">
         <div class="dropbtn">
-{#            static directory에서 profile.png를 가져와서 img에 연결한다.#}
-            <img src="{{ url_for('static', filename='profile_placeholder.png') }}">
+            {#            static directory에서 profile.png를 가져와서 img에 연결한다.#}
+            <img src="/home/sparta/static/img/profile_placeholder.png">
             <div id="user_text" id="login_user">
-{#                임시로 User라고 설정 추후에 접속한 아이디로 변경시킬 예정이다.#}
+                {#                임시로 User라고 설정 추후에 접속한 아이디로 변경시킬 예정이다.#}
                 User
             </div>
         </div>
 
         <div class="dropdown-content">
-{#            login을 누르면 해당 login page로 이동한다.#}
+            {#            login을 누르면 해당 login page로 이동한다.#}
             <a id="login_text" href="#">Login</a>
         </div>
 
@@ -232,7 +32,7 @@
 
 <div class="container">
     <h1>항스트99</h1>
-{#memo_input#}
+    {#memo_input#}
     <div id="input_ctrl">
         <input type="text" id="memo_text" placeholder="계획을 입력하세요">
         <!--        button을 누르면 sendtext()를 통해 #memo_text append 될 수 있게 한다.-->
@@ -240,7 +40,7 @@
         <!--        #memo_text가 append해서 html이 나오는 위치-->
     </div>
 
-{#memo_oppend#}
+    {#memo_oppend#}
     <div id="memo_open">
         {% for post in posts %}
             <div class="postform">
@@ -248,11 +48,15 @@
                     <div id="view_id">{{ post['id'] }}</div>
                     <p id="write">{{ post['memo'] }}</p>
                 </id>
-{#                clear button을 클릭했을 때 {{ post['memo'] }} 즉 memo table에서 해당 memo column data를 write_empty에다가 보내준다.#}
+                {#                clear button을 클릭했을 때 {{ post['memo'] }} 즉 memo table에서 해당 memo column data를 write_empty에다가 보내준다.#}
                 <div onclick="write_empty('{{ post['memo'] }}')" id="empty_btn">Clear</div>
             </div>
         {% endfor %}
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script src="/home/sparta/static/js/main.js"></script>
 
 </body>
