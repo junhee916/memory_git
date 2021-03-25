@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('.container').empty()
+            search_view()
+        })
+        function search_view() {
+            $.ajax({
+                type: "GET",
+                url: `/api/board`,
+                data: {},
+                success: function (response) {
+                    let boards = response["boards"]
+                    for (let i = 0; i < boards.length; i++) {
+                        let htmlTemp = `
+                        <div class="box" onclick="location.href='/detail?boardId=${boards[i]["boardId"]}'">
+                            <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                <img src="https://platum.kr/wp-content/uploads/2019/12/64497335_490811004989301_7459130390851092480_n.png" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                <p>
+                                    <strong>${boards[i]["name"]}</strong> <small>${boards[i]["title"]}</small> <small>${boards[i]["date"]}</small>
+                                    <br>
+                                    ${boards[i]["memo"]}
+                                </p>
+                                </div>
+                                <nav class="level is-mobile">
+                                <div class="level-left">
+                                    <a class="level-item" aria-label="reply">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-reply" aria-hidden="true"></i>
+                                    </span>
+                                    </a>
+                                    <a class="level-item" aria-label="retweet">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-retweet" aria-hidden="true"></i>
+                                    </span>
+                                    </a>
+                                    <a class="level-item" aria-label="like">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-heart" aria-hidden="true"></i>
+                                    </span>
+                                    </a>
+                                </div>
+                                </nav>
+                            </div>
+                            </article>
+                        </div>
+                        `
+
+                        $('.container').append(htmlTemp)
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <section class="hero is-info">
+        <div class="hero-body">
+          <p class="title">
+            Search
+          </p>
+        </div>
+      </section>
+    <section class="section">
+        <div class="container">
+        </div>
+    </section>
+</body>
+
+</html>

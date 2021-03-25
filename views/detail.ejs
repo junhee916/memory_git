@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString)
+        const boardId = urlParams.get("boardId")
+        $(document).ready(function () {
+            get_detail()
+        })
+        function get_detail() {
+            console.log("test")
+            $.ajax({
+                type: "GET",
+                url: `/api/board/${boardId}`,
+                data: {},
+                success: function (response) {
+                    let boardDetail = response["detail"];
+
+                    let template_html = `
+                    
+                    <div class="field">
+                        <label class="label">Username</label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input id="name" class="input is-success" type="text" placeholder="Text input" value="${boardDetail['name']}">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                        <p class="help is-success">This username is available</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                            <input id="psd" class="input" type="password" placeholder="Text input">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Title<label>
+                        <div class="control">
+                            <input id="title" class="input" type="text" placeholder="Text input" value="${boardDetail['title']}">
+                        </div>
+                    </div>
+
+
+                    <div class="field">
+                        <label class="label">Message</label>
+                        <div class="control">
+                            <textarea id="memo" class="textarea" placeholder="Textarea">${boardDetail["memo"]}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+
+                        <div class="control">
+                            <button class="button is-link" onclick="amends()">수정</button>
+                            <button class="button is-link" onclick="deletes()">삭제</button>
+                        </div>
+                    </div>        
+                       
+                    `
+                    $('.container').append(template_html)
+
+                }
+            })
+        }
+
+        function amends() {
+
+            let title = $('#title').val();
+            let name = $('#name').val();
+            let memo = $('#memo').val();
+            let password = $('#psd').val();
+            $.ajax({
+                type: "POST",
+                url: `/api/board/${boardId}`,
+                data: {
+                    'title': title,
+                    'name': name,
+                    'memo': memo,
+                    'password': password
+                },
+                success: function (response) {
+                    console.log(response['result'])
+                    alert(response['result'])
+                    if (response['result'] == 'success') {
+                        window.location.href = "/search"
+                    }
+                }
+            })
+        }
+
+        function deletes() {
+            let title = $('#title').val();
+            let name = $('#name').val();
+            let memo = $('#memo').val();
+            let password = $('#psd').val();
+            $.ajax({
+                type: "POST",
+                url: `/api/board/${boardId}/delete`,
+                data: {
+                    'title': title,
+                    'name': name,
+                    'memo': memo,
+                    'password': password
+                },
+                success: function (response) {
+                    console.log(response['result'])
+                    alert(response['result'])
+                    if (response['result'] == 'success') {
+                        window.location.href = "/search"
+                    }
+                }
+            })
+        }
+
+    </script>
+</head>
+
+<body>
+    <section class="hero is-success">
+        <div class="hero-body">
+          <p class="title">
+            Detail
+          </p>
+        </div>
+      </section>
+    <section class="section">
+        <div class="container">
+
+        </div>
+    </section>
+</body>
+
+</html>
