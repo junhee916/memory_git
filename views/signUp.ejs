@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+      function signup(){
+        let nickname = $('#nickname').val();
+        let password = $('#password').val();
+        let confirmPassword = $('#confirmPassword').val();
+
+        $.ajax({
+          type:'POST',
+          url:`/api/users`,
+          data: {
+            'nickname':nickname,
+            'password':password,
+            'confirmPassword':confirmPassword
+          },
+          success: function(response){
+            window.location.href="/"
+          }
+        })
+      }
+      
+    </script>
+  </head>
+  <body>
+    <section class="hero is-danger">
+        <div class="hero-body">
+          <p class="title">
+            SignUp
+          </p>
+        </div>
+      </section>
+    <section class="section">
+        <div class="container">
+    
+            <div class="field">
+                <label class="label">NickName</label>
+                <div class="control has-icons-left has-icons-right">
+                <input class="input is-success" type="text" placeholder="Text input" id="nickname">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+                </div>
+                <p class="help is-success">This nickname is available</p>
+            </div>
+
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                <input class="input" type="password" placeholder="Text input" id="password">
+                </div>
+            </div>
+            
+            <div class="field">
+                <label class="label">Confirm Password</label>
+                <div class="control">
+                <input class="input" type="password" placeholder="Text input" id="confirmPassword">
+                </div>
+            </div>
+    
+            <div class="field is-grouped">
+                <div class="control">
+                <button class="button is-link" onclick="signup()">SignUp</button>
+                </div>
+            </div>
+        </div>
+    </section>
+  </body>
+</html>

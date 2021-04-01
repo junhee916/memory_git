@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hello Bulma!</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function signUp() {
+        window.location.href = "/signUp";
+      }
+
+      function login() {
+        let nickname = $("#nickname").val();
+        let password = $("#password").val();
+
+        $.ajax({
+          type: "POST",
+          url: `/api/auth`,
+          data: {
+            'nickname': nickname,
+            'password': password,
+          },
+          success: function (response) {
+            localStorage.setItem("token", response.token);
+            window.location.href = "/board";
+          },
+          error: function (error) {
+            alert(error.responseJSON.errorMessage);
+          },
+        });
+      }
+
+      function boardMove(){
+        window.location.href="/board"
+      }
+
+      // function customAlert(text) {
+      //   $(".modal-content").text(text);
+      //   $(".modal").modal("show");
+      // }
+    </script>
+  </head>
+
+  <body>
+    <section class="hero is-info">
+      <div class="hero-body">
+        <p class="title">Login</p>
+      </div>
+    </section>
+
+    <div class="tabs is-centered">
+      <ul>
+        <li>
+          <a>
+            <span class="icon is-small"
+              ><i class="far fa-file-alt" aria-hidden="true"></i
+            ></span>
+            <span onclick="boardMove()">Board</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input
+              class="input"
+              type="text"
+              placeholder="NickName"
+              id="nickname"
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas fa-check"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left">
+            <input
+              class="input"
+              type="password"
+              placeholder="Password"
+              id="password"
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control">
+            <button class="button is-success" onclick="login()">Login</button>
+            <button class="button is-success" onclick="signUp()">SignUp</button>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div> -->
+  </body>
+</html>

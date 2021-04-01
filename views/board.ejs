@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+
+    $(document).ready(function(){
+        appendWrite()
+      })
+      function writes(){
+        let writes = $("#writed").val()
+
+        $.ajax({
+          type:'POST',
+          url:`/api/board`,
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          data: {
+            'writes':writes,
+  
+          },
+          success: function(response){
+            window.location.href="/board"
+          }
+        })
+      }
+
+      function appendWrite(){
+
+        $(".card").empty()
+
+        $.ajax({
+          type:'GET',
+          url:`/api/boards`,
+          headers: {
+                  authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+          data: {},
+          success: function(response){
+            let writtens = response["written"]
+            let nickname = response["nickname"]
+            for (let index in writtens){
+              let writeHtml = ` 
+                <div class="field"" onclick="location.href='/detail?writeId=${writtens[index]["writeId"]}'">
+                    <label class="label">${nickname[index]}</label>
+                    <div class="control">
+                      <textarea class="textarea" id="writes" placeholder="Textarea">${writtens[index]["writes"]}</textarea>
+                    </div>
+                </div>
+            `
+            $(".card").append(writeHtml);
+            }
+          }
+        })
+      }
+
+      function updateWrite(writeId){
+        let writes = $("#writes").val();
+        console.log(writes)
+        
+        $.ajax({
+                type: "PUT",
+                url: `/api/updateBoard/${writeId}`,
+                headers: {
+                  authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+                data: {
+                   'writes':writes
+                },
+                success: function (response) {
+                  window.location.href="/board"
+                }
+            })
+
+      }
+
+    </script>
+  </head>
+  <body>
+
+    <section class="hero is-danger">
+    <div class="hero-body">
+        <p class="title">
+        Board
+        </p>
+    </div>
+    </section>
+    <div class="container">
+
+        <div class="card">
+   
+          </div>
+
+        <textarea class="textarea is-danger" placeholder="Danger textarea" id="writed"></textarea>
+
+        <div class="buttons">
+            <button class="button is-danger" onclick="writes()">Write</button>
+        </div>
+    </div>
+  </section>
+  </body>
+</html>
